@@ -1,0 +1,27 @@
+name: Issue Helper
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to run this action on'
+        required: true
+        type: integer
+jobs:
+  base:
+    runs-on: ubuntu-latest
+    outputs:
+      parsed: ${{ steps.parse.outputs.payload }}
+    steps:
+      - name: Parse issue
+        id: parse
+        uses: onmax/issue-form-parser@v1.4
+        with:
+          issue_number: ${{ github.event_name == 'workflow_dispatch' && inputs.issue_number || github.event.issue.number }}
+      - name: Show parsed payload data
+        run: |
+          # Using the character `'` to prevent all characters enclosed within
+          # them from being treated as special characters (e.g. $ or `)
+          echo '${{ steps.parse.outputs.payload }}'
