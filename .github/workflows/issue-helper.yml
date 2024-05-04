@@ -30,4 +30,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v4.0.0
         with:
           body: ${{ steps.annotate.outputs.comments }}
-          issue-number: ${{ github.event.issue.number }}
+          issue-number: ${{ github.event_name == 'workflow_dispatch' && inputs.issue_number || github.event.issue.number }}
