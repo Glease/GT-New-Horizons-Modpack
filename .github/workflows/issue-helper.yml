@@ -22,7 +22,7 @@ jobs:
           issue_number: ${{ github.event_name == 'workflow_dispatch' && inputs.issue_number || github.event.issue.number }}
       - name: Annotate issue
         id: annotate
-        uses: Glease/GTNHIssueHelper@v0.0.3
+        uses: Glease/GTNHIssueHelper@v0.0.4
         with:
           formdata: ${{ steps.parse.outputs.payload }}
       - name: Post comment
